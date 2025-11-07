@@ -1,0 +1,21 @@
+
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --brand-600: #C88242; /* primary brand */
+  --brand-700: #EAAA00; /* secondary brand (gradient / hover) */
+}
+
+/* Lightweight helpers for brand without Tailwind config */
+.text-brand { color: var(--brand-600); }
+.bg-brand { background-color: var(--brand-600); }
+.bg-brand-hover:hover { background-color: var(--brand-700); }
+.border-brand { border-color: var(--brand-600); }
+.ring-brand { --tw-ring-color: var(--brand-600); }
+
+/* Gradient helpers */
+.from-brand { --tw-gradient-from: var(--brand-600); }
+.to-brand { --tw-gradient-to: var(--brand-700); }
+
+
