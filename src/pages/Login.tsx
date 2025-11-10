@@ -1,4 +1,3 @@
-// pages/Login.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../types/hooks";
@@ -14,15 +13,20 @@ export default function Login() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Mock authentication: anyone can log in
     if (username && password) {
       dispatch(login({ username }));
-     toast.success(`Welcome, ${username}!`, {
-  duration: 100, // 100 milliseconds
-});
-      navigate("/"); // redirect to home
+
+      // ✅ Show success toast for 1 second
+      toast.success(`Welcome, ${username}!`, {
+        duration: 1000,
+      });
+
+      // ✅ Delay navigation so toast is visible
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } else {
-      toast.error("Please enter a username and password!");
+      toast.error("Please enter a username and password!", { duration: 1000 });
     }
   };
 
