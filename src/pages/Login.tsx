@@ -17,7 +17,9 @@ export default function Login() {
     // Mock authentication: anyone can log in
     if (username && password) {
       dispatch(login({ username }));
-      toast.success(`Welcome, ${username}!`);
+     toast.success(`Welcome, ${username}!`, {
+  duration: 100, // 100 milliseconds
+});
       navigate("/"); // redirect to home
     } else {
       toast.error("Please enter a username and password!");
