@@ -1,82 +1,167 @@
-# React + TypeScript + Vite
+# eCommerce Shop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Simple, modern eCommerce frontend built with Next.js (App Router), TypeScript, Tailwind CSS, Shadcn UI, and Redux Toolkit — powered by DummyJSON for API data.
 
-Currently, two official plugins are available:
+## 🚀 Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A practice project that demonstrates a real-world frontend application with product listing, details, favorites, and full CRUD operations (create, read, update, delete) against the DummyJSON products API. The app is responsive, includes dark mode, loading and error handling, and optional mock authentication to protect certain routes.
 
-## Expanding the ESLint configuration
+## 🔧 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* **Framework:** Next.js (App Router, `/src/app`)
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS
+* **UI Library:** Shadcn UI
+* **State Management:** Redux Toolkit
+* **HTTP Client:** Axios
+* **API (dev/test):** DummyJSON — [https://dummyjson.com](https://dummyjson.com)
+* **Notifications:** react-hot-toast / sonner (optional)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## ✨ Key Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* Product listing with infinite / on-scroll pagination
+* Product detail page with full info (images, brand, stock, rating)
+* Favorite/unfavorite products (kept in Redux store)
+* Create product form (POST to DummyJSON)
+* Edit product (PATCH/PUT to DummyJSON)
+* Delete product (with confirm dialog)
+* Search products (bonus)
+* Dark mode toggle via Redux
+* Loading & error states for network requests
+* Basic mock authentication for protected routes
+* Toast notifications for feedback
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📁 Suggested Folder Structure
+
+```
+/src
+  /app                # Next.js App Router (pages + layouts)
+  /components         # Reusable UI components (ProductCard, Header, Footer, Button)
+  /features
+    /products         # Redux slice + hooks for products
+    /favorites        # Redux slice for favorites
+    /auth             # Mock auth slice
+  /lib                # axios instance, helpers
+  /hooks              # custom hooks (useInfiniteProducts, useAuth)
+  /styles             # tailwind config, globals
+  /types              # shared TypeScript types
+  /utils              # utils (formatPrice, date helpers)
+
+public/
+
+next.config.js
+tailwind.config.js
+package.json
+README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚙️ Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env.local` in the project root with (example):
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
-state:is mutable that store data /info about the componentcan,ownership by component,component local data  manage
-state with in the component can be access
-props :parent to child props is not muatable ,parent ownership,focus paret data to child transfer
-state intialize use state()
-dark and light pass 
-post>postcatag>detail
-it is global container hulume access meyaregute mekemetebete
-create cotext
-create provider
-make provide accesable
-use it
-# ecommerce_FCA
-# ecommerce_FCA
+NEXT_PUBLIC_API_BASE_URL=https://dummyjson.com
+# (If you use a server component or stripe during dev, add keys here)
+```
+
+> DummyJSON doesn't require authentication — but keep this pattern to add other APIs later.
+
+## 📥 Installation & Local Development
+
+1. Clone the repository
+
+```bash
+git clone <YOUR_REPO_URL>
+cd ecommerce-shop
+```
+
+2. Install dependencies
+
+```bash
+npm install
+# or
+pnpm install
+# or
+yarn
+```
+
+3. Run the development server
+
+```bash
+npm run dev
+# or
+pnpm dev
+# or
+yarn dev
+```
+
+Open `http://localhost:3000` in your browser.
+
+## 🧩 Available Scripts (package.json)
+
+* `dev` — run Next.js in development
+* `build` — build for production
+* `start` — start the production server
+* `lint` — run linters
+* `format` — format code (prettier)
+
+## 🔁 API Integration Notes
+
+Use Axios with a central instance (`/src/lib/api.ts`) that points to `NEXT_PUBLIC_API_BASE_URL`. Example endpoints you'll use:
+
+* `GET /products` — list products (supports `limit` & `skip` query params)
+* `GET /products/:id` — single product
+* `POST /products/add` — create product
+* `PUT /products/:id` — update product
+* `DELETE /products/:id` — delete product
+* `GET /products/search?q={query}` — search products
+* `GET /products/categories` — categories list
+
+Handle successful responses and errors and surface them with UI states and toasts.
+
+## 🔐 Mock Authentication (Simple Flow)
+
+* Basic form that `dispatch(login({ username }))` to set a user in Redux
+* Protect routes by wrapping page components with a `PrivateRoute` component that checks `auth.isAuthenticated`
+
+## ✅ Example: Favorite Flow (Redux)
+
+* `favorites` slice stores a list of favorite product objects or IDs
+* `toggleFavorite(product)` adds/removes from that list
+* Persisting favorites to `localStorage` (optional) for session persistence
+
+## 🧪 Testing & Quality
+
+* Add unit tests for slices and helpers (Jest + React Testing Library)
+* Run `npm run lint` and `npm run format` before PRs
+
+## 📦 Deployment
+
+* Recommended: Vercel (Next.js first-class), Netlify (if using a custom build), or any Node host
+* Set env vars in the host dashboard (if needed)
+* Build command: `npm run build`
+* Output: Next.js app
+
+## 📝 README Checklist (for submission)
+
+* [ ] GitHub repo public link
+* [ ] Clear `README.md` with setup and scripts (this file)
+* [ ] Screenshots or demo GIF (add to `/public/assets`) — optional but recommended
+* [ ] Running app: `npm run dev` successful
+* [ ] Basic tests passing (if added)
+
+## 👨‍💻 Contributing
+
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feat/my-feature`)
+3. Commit changes (`git commit -m 'feat: add ...'`)
+4. Push and open a PR
+
+## 📚 Resources
+
+* DummyJSON docs: [https://dummyjson.com/docs/products](https://dummyjson.com/docs/products)
+* Next.js App Router docs: [https://nextjs.org/docs](https://nextjs.org/docs)
+* Tailwind CSS: [https://tailwindcss.com/docs](https://tailwindcss.com/docs)
+* Redux Toolkit docs: [https://redux-toolkit.js.org/](https://redux-toolkit.js.org/)
+* Shadcn UI: [https://ui.shadcn.com/](https://ui.shadcn.com/)
+
